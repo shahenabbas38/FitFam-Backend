@@ -24,9 +24,9 @@ class ProfileController extends Controller
             'profile'=>$profile
         ],201);
     }
-    public function update(UpdateProfileController $request,$id){
-        $profile=Profile::FindOrfail($id);
-        return response()->json($profile,200);
+    // public function update(UpdateProfileController $request,$id){
+    //     $profile=Profile::FindOrfail($id);
+    //     return response()->json($profile,200);
 
-    }
+    // }
 }
