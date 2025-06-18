@@ -1,6 +1,8 @@
 <?php
+
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserChallengeRequest;
 use Illuminate\Http\Request;
 use App\Models\UserChallenge;
 
@@ -11,18 +13,19 @@ class UserChallengeController extends Controller
         return UserChallenge::all();
     }
 
-    public function store(Request $request)
+    public function store(UserChallengeRequest $request)
     {
-        $data = $request->validate([
-            'UserId' => 'required|string',
-            'ChallengeId' => 'required|string',
-            'JoinDate' => 'required|date',
-        ]);
+        $data = $request->validated();  // تحقق من صحة البيانات
 
-        $userChallenge = UserChallenge::create($data);
-        return response()->json($userChallenge, 201);
+        $userChallenge = UserChallenge::create($data);  // إنشاء السجل
+
+        return response()->json([
+            'message' => 'User Challenge Created Successfully',
+            'data' => $userChallenge
+        ], 201);
     }
 
+    /*****************************************************************************************/
     public function show($id)
     {
         return UserChallenge::findOrFail($id);
@@ -32,11 +35,7 @@ class UserChallengeController extends Controller
     {
         $userChallenge = UserChallenge::findOrFail($id);
 
-        $data = $request->validate([
-            'UserId' => 'string',
-            'ChallengeId' => 'string',
-            'JoinDate' => 'date',
-        ]);
+        $data = $request->validate();
 
         $userChallenge->update($data);
         return response()->json($userChallenge);

@@ -8,11 +8,15 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void {
         Schema::create('challenges', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id(); // ID عادي Auto Increment
             $table->string('name');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->uuid('created_by_id');
+
+            // أولاً تعرّف العمود، ثم المفتاح الأجنبي
+            $table->unsignedBigInteger('created_by_id');
+            $table->foreign('created_by_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->boolean('is_public');
             $table->timestamps();
         });

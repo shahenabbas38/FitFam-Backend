@@ -56,9 +56,9 @@ class UserController extends Controller
             'message' => 'logout Successfully']);
 
      }
-    // public function getprofile($id)
-    // {
-    //     $profile = User::find($id)->profile;
-    //     return response()->json($profile);
-    // }
+    //  public function getINFO_user($id)
+    //  {
+    //      $profile = User::find($id)->profile;
+    //      return response()->json($profile);
+    //  }
 }

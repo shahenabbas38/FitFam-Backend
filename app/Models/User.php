@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Http\Controllers\UserChallengeController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,12 +20,12 @@ class User extends Authenticatable
      *
      * @var list<int,string>
      */
-     protected $fillable = [
+    protected $fillable = [
         // 'options->enabled',
-         'name',
-         'email',
-         'password',
-     ];
+        'name',
+        'email',
+        'password',
+    ];
     // protected $guarded = [];
 
     /**
@@ -53,9 +55,25 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
-    /****************************************************** */
+    /**************************************************************/
     public function personal_profiles()
     {
         return $this->hasOne(PersonalProfile::class);
     }
+    /**************************************************************/
+    public function challenges()
+    {
+        return $this->hasMany(Challenge::class, 'created_by_id');
+    }
+    /***************************************************************/
+    public function sentFriendRequests()
+    {
+        return $this->hasMany(FriendRequest::class, 'sender_id');
+    }
+    /***************************************************************/
+    public function receivedFriendRequests()
+    {
+        return $this->hasMany(FriendRequest::class, 'receiver_id');
+    }
+    /***************************************************************/
 }

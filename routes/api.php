@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonalProfileController;
 use App\Http\Controllers\ChallengeController;
+use App\Http\Controllers\UserChallengeController;
+use App\Http\Controllers\FriendRequestController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// Route::get('user/{id}/profile', [UserController::class, 'getprofile']);
-// Route::put('profile/{id},', [ProfileController::class, 'update']);
+//Route::get('user/{id}/profile', [UserController::class, 'getINFO_user']);
+//Route::put('profile/{id},', [ProfileController::class, 'update']);
 Route::post('profile', [ProfileController::class, 'store']); //بعد البوست اسم المودل
 Route::get('profile/{id}', [ProfileController::class, 'show']);
 /************************************************************************************/
@@ -24,4 +26,30 @@ Route::get('personal-profile/{user_id}', [PersonalProfileController::class, 'sho
 Route::post('personal-profile', [PersonalProfileController::class, 'store']);
 Route::put('personal-profile/{user_id}', [PersonalProfileController::class, 'update']);
 /************************************************************************************/
-Route::apiResource('challenges', ChallengeController::class);
+//Route::apiResource('challenges', ChallengeController::class);
+Route::get('/challenges', [ChallengeController::class, 'index']);
+Route::post('/challenges', [ChallengeController::class, 'store']);
+Route::get('/challenges/{id}', [ChallengeController::class, 'show']);
+//Route::put('/challenges/{id}', [ChallengeController::class, 'update']);
+Route::put('/challenges/{id}/update', [ChallengeController::class, 'updateChallenge']);
+Route::delete('/challenges/{id}', [ChallengeController::class, 'destroy']);
+/***********************************************************************************/
+Route::get('/user-challenges', [UserChallengeController::class, 'index']);         // عرض كل المشاركات
+Route::post('/user-challenges', [UserChallengeController::class, 'store']);        // إنشاء مشاركة
+Route::get('/user-challenges/{id}', [UserChallengeController::class, 'show']);       // عرض مشاركة واحدة
+Route::put('/user-challenges/{id}', [UserChallengeController::class, 'update']);     // تحديث مشاركة
+Route::delete('/user-challenges/{id}', [UserChallengeController::class, 'destroy']); // حذف مشاركة
+/***********************************************************************************/
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/friend-requests/send/{receiverId}', [FriendRequestController::class, 'sendRequest']);
+    Route::post('/friend-requests/accept/{id}', [FriendRequestController::class, 'acceptRequest']);
+    Route::post('/friend-requests/reject/{id}', [FriendRequestController::class, 'rejectRequest']);
+
+    Route::get('/friend-requests', [FriendRequestController::class, 'index']);
+    Route::get('/friend-requests/sent', [FriendRequestController::class, 'sentRequests']);
+    Route::get('/friend-requests/received', [FriendRequestController::class, 'receivedRequests']);
+
+    Route::get('/friends', [FriendRequestController::class, 'friends']);
+});

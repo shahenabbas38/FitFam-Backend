@@ -11,22 +11,27 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    public function show($id){
-        $profile=Profile::where('user_id',$id)->firstOrFail();//بروفايل لون أخضر ضروري استدعي model
-        return response()->json($profile,200);
+    public function show($id)
+    {
+        $profile = Profile::where('user_id', $id)->firstOrFail(); //بروفايل لون أخضر ضروري استدعي model
+        return response()->json($profile, 200);
     }
 
-    public function store(StoreProfileController $request) {
+    public function store(StoreProfileController $request)
+    {
 
         $profile = Profile::create($request->validated());
         return response()->json([
-            'massege'=>'profile created sucssfuly',
-            'profile'=>$profile
-        ],201);
+            'massege' => 'profile created sucssfuly',
+            'profile' => $profile
+        ], 201);
     }
-    // public function update(UpdateProfileController $request,$id){
-    //     $profile=Profile::FindOrfail($id);
-    //     return response()->json($profile,200);
-
+    // public function update(ProfileController $request, $id)
+    // {
+    //     $profile = Profile::FindOrfail($id);
+    //     return response()->json([
+    //         'message' => 'Profile updated successfully',
+    //         'profile' => $profile
+    //     ], 200);
     // }
 }

@@ -4,21 +4,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
+use App\Models\User;
+
 
 class UserChallenge extends Model
 {
-    public $incrementing = false;
-    protected $keyType = 'string';
-    protected $fillable = ['id', 'user_id', 'challenge_id', 'join_date'];
 
-    protected static function booted() {
-        static::creating(function ($userChallenge) {
-            $userChallenge->id = (string) Str::uuid();
-        });
-    }
+    protected $fillable = [ 'user_id', 'challenge_id', 'join_date'];
 
-    public function challenge() {
+
+
+    public function challenge()
+    {
         return $this->belongsTo(Challenge::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

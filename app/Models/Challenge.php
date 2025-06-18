@@ -4,22 +4,26 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Str;
 
 class Challenge extends Model
 {
-    public $incrementing = false;
-    protected $keyType = 'string';
-    protected $fillable = ['id', 'name', 'start_date', 'end_date', 'created_by_id', 'is_public'];
+    protected $fillable = [ 'name', 'start_date', 'end_date', 'created_by_id', 'is_public'];
 
-    protected static function booted() {
-        static::creating(function ($challenge) {
-            $challenge->id = (string) Str::uuid();
-        });
+    // علاقة: من أنشأ التحدي
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by_id');
     }
 
-    public function userChallenges(): HasMany {
-        return $this->hasMany(UserChallenge::class);
+    // علاقة: المستخدمين المشاركين بالتحدي
+    public function userChallenges()
+    {
+        return $this->hasMany(UserChallenge::class, 'challenge_id');
+    }
+
+    // علاقة مباشرة لجلب المستخدمين المشاركين بالتحدي
+    public function participants()
+    {
+        return $this->hasManyThrough(User::class, UserChallenge::class, 'challenge_id', 'id', 'id', 'user_id');
     }
 }

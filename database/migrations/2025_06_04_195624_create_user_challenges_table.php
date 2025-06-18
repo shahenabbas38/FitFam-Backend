@@ -6,21 +6,22 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    public function up(): void {
+    public function up(): void
+    {
         Schema::create('user_challenges', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('user_id');
-            $table->uuid('challenge_id');
-            $table->dateTime('join_date');
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('challenge_id');
+            $table->date('join_date');
             $table->timestamps();
 
-            // العلاقات
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('challenge_id')->references('id')->on('challenges')->onDelete('cascade');
-            // ملاحظة: يمكن ربط user_id بجداول المستخدمين عند الحاجة
         });
     }
 
-    public function down(): void {
+    public function down(): void
+    {
         Schema::dropIfExists('user_challenges');
     }
 };
