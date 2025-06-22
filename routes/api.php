@@ -8,6 +8,8 @@ use App\Http\Controllers\PersonalProfileController;
 use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\UserChallengeController;
 use App\Http\Controllers\FriendRequestController;
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\PerformanceStatController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -53,3 +55,16 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/friends', [FriendRequestController::class, 'friends']);
 });
+/***********************************************************************************/
+Route::get('/user-profiles', [UserProfileController::class, 'index']);    
+Route::post('/user-profiles', [UserProfileController::class, 'store']);       
+Route::get('/user-profiles/{id}', [UserProfileController::class, 'show']);    
+Route::put('/user-profiles/{id}', [UserProfileController::class, 'update']);  
+Route::delete('/user-profiles/{id}', [UserProfileController::class, 'destroy']);
+/***********************************************************************************/
+Route::get('/performance-stats', [PerformanceStatController::class, 'index']);          
+Route::post('/performance-stats', [PerformanceStatController::class, 'store']);         
+Route::get('/performance-stats/{id}', [PerformanceStatController::class, 'show']);    
+Route::put('/performance-stats/{id}', [PerformanceStatController::class, 'update']);
+Route::delete('/performance-stats/{id}', [PerformanceStatController::class, 'destroy']);
+

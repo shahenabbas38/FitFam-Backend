@@ -76,4 +76,8 @@ class User extends Authenticatable
         return $this->hasMany(FriendRequest::class, 'receiver_id');
     }
     /***************************************************************/
+    public function profilee()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
 }
