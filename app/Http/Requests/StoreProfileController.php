@@ -19,14 +19,16 @@ class StoreProfileController extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
-    {
-        return [
-            'user_id' => 'required|exists:users,id',
-            'family_members' => 'nullable|integer',
-            'age_group' => 'nullable|string',
-            'preferred_activity' => 'nullable|string',
-            'main_goal' => 'nullable|string',
-        ];
-    }
+public function rules(): array
+{
+    return [
+        'user_id' => 'required|exists:users,id',
+        'family_members' => 'nullable|integer',
+        'age_group' => 'nullable|string',
+        'preferred_activity' => 'nullable|string',
+        'main_goal' => 'nullable|string',
+        'weight' => 'nullable|numeric|min:0', // تمت إضافة الوزن هنا
+    ];
+}
+
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('age_group')->nullable();
             $table->string('preferred_activity')->nullable();
             $table->string('main_goal')->nullable();
+            $table->float('weight')->nullable();
             $table->timestamps();
         });
     }
