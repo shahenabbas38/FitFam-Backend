@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 
-Route::get('/', function () {
-    return response()->json(['message' => 'Laravel API is working!']);
+Route::get('/check-weight', function () {
+    return Schema::hasColumn('profiles', 'weight') ? '✔ موجود' : '❌ غير موجود';
 });

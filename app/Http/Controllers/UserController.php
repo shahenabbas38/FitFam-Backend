@@ -27,38 +27,51 @@ class UserController extends Controller
         ]);
         return response()->json([
             'message' => 'User registered Successfully',
-            'User' => $user 
+            'User' => $user
         ], 201);
     }
-    public function login(Request $request) 
+    public function login(Request $request)
     {
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string'
         ]);
-        if(!Auth::attempt($request->only('email','password')))//اذا الايميل ةالباسورد غير متابقين
-        return response()->json([
-            'message'=>'invalid email or password']
-            , 401
-        );
-        $user=User::where('email',$request->email)->FirstOrFail();
-        $token=$user->createToken('auth_Token')->plainTextToken;
+        if (!Auth::attempt($request->only('email', 'password'))) //اذا الايميل ةالباسورد غير متابقين
+            return response()->json(
+                [
+                    'message' => 'invalid email or password'
+                ],
+                401
+            );
+        $user = User::where('email', $request->email)->FirstOrFail();
+        $token = $user->createToken('auth_Token')->plainTextToken;
         return response()->json([
             'message' => 'login Successfully',
-            'User' => $user ,
-            'Token'=>$token
+            'User' => $user,
+            'Token' => $token
         ], 201);
     }
     public function logout(Request $request)
-     {
+    {
         $request->user()->currentAccessToken()->delete();
         return response()->json([
-            'message' => 'logout Successfully']);
+            'message' => 'logout Successfully'
+        ]);
+    }
+    public function searchUser(Request $request)
+    {
+        $request->validate([
+            'query' => 'required|string',
+        ]);
 
-     }
-    //  public function getINFO_user($id)
-    //  {
-    //      $profile = User::find($id)->profile;
-    //      return response()->json($profile);
-    //  }
+        $query = $request->query('query');
+
+        $users = User::where('name', 'LIKE', "%$query%")
+            ->orWhere('email', 'LIKE', "%$query%")
+            ->get();
+
+        return response()->json([
+            'results' => $users
+        ]);
+    }
 }

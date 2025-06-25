@@ -67,5 +67,5 @@ Route::post('/performance-stats', [PerformanceStatController::class, 'store']);
 Route::get('/performance-stats/{id}', [PerformanceStatController::class, 'show']);    
 Route::put('/performance-stats/{id}', [PerformanceStatController::class, 'update']);
 Route::delete('/performance-stats/{id}', [PerformanceStatController::class, 'destroy']);
-// Trigger redeploy on Railway
-
+/***********************************************************************************/
+Route::get('/search-user', [UserController::class, 'searchUser']);
