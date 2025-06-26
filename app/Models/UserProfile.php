@@ -14,7 +14,8 @@ class UserProfile extends Model
         'age',
         'weight',
         'height',
-        'fitness_level',
+        'family_members',
+        'preferred_activity',
         'points',
     ];
 

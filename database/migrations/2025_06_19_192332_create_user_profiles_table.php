@@ -15,6 +15,8 @@ return new class extends Migration
             $table->float('weight')->nullable();
             $table->float('height')->nullable();
             $table->string('fitness_level')->nullable();
+            $table->integer('family_members')->nullable();          
+            $table->string('preferred_activity')->nullable();           
             $table->integer('points')->default(0); 
             $table->timestamps();
         });

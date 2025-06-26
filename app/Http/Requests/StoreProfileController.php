@@ -27,7 +27,7 @@ public function rules(): array
         'age_group' => 'nullable|string',
         'preferred_activity' => 'nullable|string',
         'main_goal' => 'nullable|string',
-        'weight' => 'nullable|numeric|min:0', // تمت إضافة الوزن هنا
+        'weight' => 'nullable|numeric|min:0',
     ];
 }
 

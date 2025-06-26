@@ -44,7 +44,8 @@ class UserProfileController extends Controller
             'age' => 'nullable|integer',
             'weight' => 'nullable|numeric',
             'height' => 'nullable|numeric',
-            'fitness_level' => 'nullable|string',
+            'family_members' => 'nullable|integer',
+            'preferred_activity' => 'nullable|string',
             'points' => 'nullable|integer',
         ]);
 
