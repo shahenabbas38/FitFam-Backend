@@ -80,4 +80,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserProfile::class);
     }
+    /***************************************************************/
+
+    public function rewardSystem()
+    {
+        return $this->hasOne(RewardSystem::class);
+    }
 }

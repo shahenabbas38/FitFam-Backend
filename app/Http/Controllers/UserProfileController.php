@@ -22,8 +22,10 @@ class UserProfileController extends Controller
             'weight' => 'nullable|numeric',
             'height' => 'nullable|numeric',
             'fitness_level' => 'nullable|string',
-            'points' => 'nullable|integer',
         ]);
+
+        // احسب النقاط تلقائيًا
+        $data['points'] = $this->calculatePoints($data);
 
         $profile = UserProfile::create($data);
         return response()->json($profile, 201);
@@ -46,8 +48,11 @@ class UserProfileController extends Controller
             'height' => 'nullable|numeric',
             'family_members' => 'nullable|integer',
             'preferred_activity' => 'nullable|string',
-            'points' => 'nullable|integer',
+            'fitness_level' => 'nullable|string',
         ]);
+
+        // احسب النقاط بعد التعديل
+        $data['points'] = $this->calculatePoints($data);
 
         $profile->update($data);
         return response()->json($profile);
@@ -60,5 +65,11 @@ class UserProfileController extends Controller
         $profile->delete();
 
         return response()->json(['message' => 'Profile deleted successfully']);
+    }
+
+    // 🔢 تابع لحساب النقاط (المعادلة تحددها لاحقًا)
+    private function calculatePoints(array $data): int
+    {
+        return 0; // مؤقتًا صفر، سيتم تعديلها لاحقًا حسب تعليماتك
     }
 }

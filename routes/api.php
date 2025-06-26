@@ -10,6 +10,7 @@ use App\Http\Controllers\UserChallengeController;
 use App\Http\Controllers\FriendRequestController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\PerformanceStatController;
+use App\Http\Controllers\RewardSystemController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -56,11 +57,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/friends', [FriendRequestController::class, 'friends']);
 });
 /***********************************************************************************/
-Route::get('/user-profiles', [UserProfileController::class, 'index']);    
-Route::post('/user-profiles', [UserProfileController::class, 'store']);       
-Route::get('/user-profiles/{id}', [UserProfileController::class, 'show']);    
-Route::put('/user-profiles/{id}', [UserProfileController::class, 'update']);  
-Route::delete('/user-profiles/{id}', [UserProfileController::class, 'destroy']);
+Route::prefix('user-profiles')->group(function () {
+    Route::get('/', [UserProfileController::class, 'index']);
+    Route::post('/', [UserProfileController::class, 'store']);
+    Route::get('{id}', [UserProfileController::class, 'show']);
+    Route::put('{id}', [UserProfileController::class, 'update']);
+    Route::delete('{id}', [UserProfileController::class, 'destroy']);
+});
 /***********************************************************************************/
 Route::get('/performance-stats', [PerformanceStatController::class, 'index']);          
 Route::post('/performance-stats', [PerformanceStatController::class, 'store']);         
@@ -69,3 +72,11 @@ Route::put('/performance-stats/{id}', [PerformanceStatController::class, 'update
 Route::delete('/performance-stats/{id}', [PerformanceStatController::class, 'destroy']);
 /***********************************************************************************/
 Route::get('/search-user', [UserController::class, 'searchUser']);
+// ✅ مسارات نظام المكافآت
+Route::prefix('rewards')->group(function () {
+    Route::get('/', [RewardSystemController::class, 'index']);         // جلب كل المكافآت
+    Route::post('/', [RewardSystemController::class, 'store']);        // إنشاء مكافأة جديدة
+    Route::get('{id}', [RewardSystemController::class, 'show']);       // عرض مكافأة واحدة
+    Route::put('{id}', [RewardSystemController::class, 'update']);     // تعديل المكافأة
+    Route::delete('{id}', [RewardSystemController::class, 'destroy']); // حذف المكافأة
+});
