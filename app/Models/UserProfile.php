@@ -16,8 +16,10 @@ class UserProfile extends Model
         'height',
         'family_members',
         'preferred_activity',
+        'fitness_level',  
         'points',
     ];
+
 
     public function user()
     {

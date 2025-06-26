@@ -57,13 +57,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/friends', [FriendRequestController::class, 'friends']);
 });
 /***********************************************************************************/
-Route::prefix('user-profiles')->group(function () {
-    Route::get('/', [UserProfileController::class, 'index']);
-    Route::post('/', [UserProfileController::class, 'store']);
-    Route::get('{id}', [UserProfileController::class, 'show']);
-    Route::put('{id}', [UserProfileController::class, 'update']);
-    Route::delete('{id}', [UserProfileController::class, 'destroy']);
+Route::middleware('auth:sanctum')->prefix('user-profiles')->name('user-profiles.')->group(function () {
+    Route::get('/', [UserProfileController::class, 'index'])->name('index');          
+    Route::post('/', [UserProfileController::class, 'store'])->name('store');        
+    Route::get('{id}', [UserProfileController::class, 'show'])->name('show');         
+    Route::put('{id}', [UserProfileController::class, 'update'])->name('update');    
+    Route::delete('{id}', [UserProfileController::class, 'destroy'])->name('destroy');
 });
+
 /***********************************************************************************/
 Route::get('/performance-stats', [PerformanceStatController::class, 'index']);          
 Route::post('/performance-stats', [PerformanceStatController::class, 'store']);         

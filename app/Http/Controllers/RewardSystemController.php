@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RewardSystem;
 use Illuminate\Http\Request;
+use App\Services\PointCalculatorService;
 
 class RewardSystemController extends Controller
 {
@@ -22,9 +23,9 @@ class RewardSystemController extends Controller
             'active_day' => 'required|boolean',
         ]);
 
-        $data['points'] = $this->calculatePoints($data);
-        $data['badge'] = $this->assignBadge($data['points']);
-        $data['virtual_reward'] = $this->assignVirtualReward($data['points']);
+        $data['points'] = PointCalculatorService::calculate($data);
+        $data['badge'] = PointCalculatorService::assignBadge($data['points']);
+        $data['virtual_reward'] = PointCalculatorService::assignVirtualReward($data['points']);
 
         $reward = RewardSystem::create($data);
         return response()->json($reward, 201);
@@ -48,9 +49,9 @@ class RewardSystemController extends Controller
 
         $merged = array_merge($reward->toArray(), $data);
 
-        $data['points'] = $this->calculatePoints($merged);
-        $data['badge'] = $this->assignBadge($data['points']);
-        $data['virtual_reward'] = $this->assignVirtualReward($data['points']);
+        $data['points'] = PointCalculatorService::calculate($merged);
+        $data['badge'] = PointCalculatorService::assignBadge($data['points']);
+        $data['virtual_reward'] = PointCalculatorService::assignVirtualReward($data['points']);
 
         $reward->update($data);
         return response()->json($reward);
@@ -62,51 +63,5 @@ class RewardSystemController extends Controller
         $reward->delete();
 
         return response()->json(['message' => 'Reward deleted successfully']);
-    }
-
-    // 🔢 حساب النقاط بناءً على النشاط
-    private function calculatePoints(array $data): int
-    {
-        $points = 0;
-
-        if (($data['steps'] ?? 0) >= 1000) {
-            $points += 10;
-        }
-
-        if (!empty($data['completed_challenge'])) {
-            $points += 50;
-        }
-
-        if (!empty($data['invited_family'])) {
-            $points += 30;
-        }
-
-        if (!empty($data['active_day'])) {
-            $points += 20;
-        }
-
-        return $points;
-    }
-
-    // 🏅 تحديد البادج
-    private function assignBadge(int $points): string
-    {
-        if ($points >= 100) {
-            return 'Gold 🥇';
-        } elseif ($points >= 50) {
-            return 'Silver 🥈';
-        } else {
-            return 'Bronze 🥉';
-        }
-    }
-
-    // 🎁 تحديد المكافأة المالية
-    private function assignVirtualReward(int $points): ?string
-    {
-        if ($points >= 1000) {
-            return 'مبروك! ربحت 5$ 🎉';
-        }
-
-        return null;
     }
 }
