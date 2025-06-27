@@ -22,7 +22,7 @@ Route::get('/user', function (Request $request) {
 //Route::get('user/{id}/profile', [UserController::class, 'getINFO_user']);
 //Route::put('profile/{id},', [ProfileController::class, 'update']);
 Route::post('profile', [ProfileController::class, 'store']); //بعد البوست اسم المودل
-Route::get('profile/{id}', [ProfileController::class, 'show']);
+Route::get('profile/by-user/{user_id}', [ProfileController::class, 'showByUser']);
 /************************************************************************************/
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
