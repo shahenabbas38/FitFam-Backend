@@ -3,29 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProfileController;
-use App\Http\Requests\UpdateProfileController;
+use App\Http\Requests\UpdateProfileRequest;
 use App\Models\Profile;
-use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
-
 
 class ProfileController extends Controller
 {
     public function show($id)
     {
-        $profile = Profile::where('user_id', $id)->firstOrFail(); //بروفايل لون أخضر ضروري استدعي model
+        $profile = Profile::where('user_id', $id)->firstOrFail();
         return response()->json($profile, 200);
     }
 
     public function store(StoreProfileController $request)
     {
-
         $profile = Profile::create($request->validated());
         return response()->json([
-            'massege' => 'profile created sucssfuly',
+            'message' => 'Profile created successfully',
             'profile' => $profile
         ], 201);
     }
+
     public function showByUser($user_id)
     {
         $profile = Profile::where('user_id', $user_id)->first();
@@ -39,13 +37,15 @@ class ProfileController extends Controller
         return response()->json($profile, 200);
     }
 
+    public function updateByUser(UpdateProfileRequest $request, $user_id)
+    {
+        $profile = Profile::where('user_id', $user_id)->firstOrFail();
 
-    // public function update(ProfileController $request, $id)
-    // {
-    //     $profile = Profile::FindOrfail($id);
-    //     return response()->json([
-    //         'message' => 'Profile updated successfully',
-    //         'profile' => $profile
-    //     ], 200);
-    // }
+        $profile->update($request->validated());
+
+        return response()->json([
+            'message' => 'Profile updated successfully',
+            'profile' => $profile
+        ], 200);
+    }
 }
