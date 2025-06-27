@@ -95,4 +95,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(OfflineChallenge::class);
     }
+    /***************************************************************/
+    public function familyTreeFeatures()
+    {
+        return $this->hasMany(FamilyTreeFeature::class);
+    }
 }

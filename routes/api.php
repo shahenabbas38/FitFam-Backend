@@ -12,6 +12,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\PerformanceStatController;
 use App\Http\Controllers\RewardSystemController;
 use App\Http\Controllers\OfflineChallengeController;
+use App\Http\Controllers\FamilyTreeFeatureController;
 
 
 Route::get('/user', function (Request $request) {
@@ -92,3 +93,11 @@ Route::middleware('auth:sanctum')->get('offline-challenge', [OfflineChallengeCon
 Route::post('get-token/{id}', [UserController::class, 'getTokenForUser']);
 Route::middleware('auth:sanctum')->get('user/challenges', [UserController::class, 'getUserChallenges']);
 Route::middleware('auth:sanctum')->post('user/join-challenge/{id}', [UserController::class, 'joinChallenge']);
+/***********************************************************************************/
+Route::prefix('family-tree-features')->group(function () {
+    Route::get('/index', [FamilyTreeFeatureController::class, 'index']);
+    Route::post('/create', [FamilyTreeFeatureController::class, 'store']);
+    Route::get('/show/{id}', [FamilyTreeFeatureController::class, 'show']);
+    Route::put('/update/{id}', [FamilyTreeFeatureController::class, 'update']);
+    Route::delete('/delete/{id}', [FamilyTreeFeatureController::class, 'destroy']);
+});
