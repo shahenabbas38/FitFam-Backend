@@ -58,17 +58,17 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 /***********************************************************************************/
 Route::middleware('auth:sanctum')->prefix('user-profiles')->name('user-profiles.')->group(function () {
-    Route::get('/', [UserProfileController::class, 'index'])->name('index');          
-    Route::post('/', [UserProfileController::class, 'store'])->name('store');        
-    Route::get('{id}', [UserProfileController::class, 'show'])->name('show');         
-    Route::put('{id}', [UserProfileController::class, 'update'])->name('update');    
-    Route::delete('{id}', [UserProfileController::class, 'destroy'])->name('destroy');
+    Route::get('/', [UserProfileController::class, 'index'])->name('index');          // GET /api/user-profiles
+    Route::post('/', [UserProfileController::class, 'store'])->name('store');         // POST /api/user-profiles
+    Route::get('{id}', [UserProfileController::class, 'show'])->name('show');         // GET /api/user-profiles/{id}
+    Route::put('{id}', [UserProfileController::class, 'update'])->name('update');     // PUT /api/user-profiles/{id}
+    Route::delete('{id}', [UserProfileController::class, 'destroy'])->name('destroy'); // DELETE /api/user-profiles/{id}
 });
 
 /***********************************************************************************/
-Route::get('/performance-stats', [PerformanceStatController::class, 'index']);          
-Route::post('/performance-stats', [PerformanceStatController::class, 'store']);         
-Route::get('/performance-stats/{id}', [PerformanceStatController::class, 'show']);    
+Route::get('/performance-stats', [PerformanceStatController::class, 'index']);
+Route::post('/performance-stats', [PerformanceStatController::class, 'store']);
+Route::get('/performance-stats/{id}', [PerformanceStatController::class, 'show']);
 Route::put('/performance-stats/{id}', [PerformanceStatController::class, 'update']);
 Route::delete('/performance-stats/{id}', [PerformanceStatController::class, 'destroy']);
 /***********************************************************************************/
@@ -80,4 +80,7 @@ Route::prefix('rewards')->group(function () {
     Route::get('{id}', [RewardSystemController::class, 'show']);       // عرض مكافأة واحدة
     Route::put('{id}', [RewardSystemController::class, 'update']);     // تعديل المكافأة
     Route::delete('{id}', [RewardSystemController::class, 'destroy']); // حذف المكافأة
+});
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('user-profiles/{id}/add-points', [UserProfileController::class, 'addPoints']);
 });

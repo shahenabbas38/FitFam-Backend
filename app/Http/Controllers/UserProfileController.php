@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\UserProfile;
 use Illuminate\Http\Request;
-use App\Services\PointCalculatorService;
 
 class UserProfileController extends Controller
 {
@@ -21,9 +20,9 @@ class UserProfileController extends Controller
             'weight' => 'nullable|numeric',
             'height' => 'nullable|numeric',
             'fitness_level' => 'nullable|string',
+            'family_members' => 'nullable|integer',
+            'preferred_activity' => 'nullable|string',
         ]);
-
-        $data['points'] = PointCalculatorService::calculate($data);
 
         $profile = UserProfile::create($data);
         return response()->json($profile, 201);
@@ -42,12 +41,10 @@ class UserProfileController extends Controller
             'age' => 'nullable|integer',
             'weight' => 'nullable|numeric',
             'height' => 'nullable|numeric',
+            'fitness_level' => 'nullable|string',
             'family_members' => 'nullable|integer',
             'preferred_activity' => 'nullable|string',
-            'fitness_level' => 'nullable|string',
         ]);
-
-        $data['points'] = PointCalculatorService::calculate($data);
 
         $profile->update($data);
         return response()->json($profile);
@@ -59,5 +56,21 @@ class UserProfileController extends Controller
         $profile->delete();
 
         return response()->json(['message' => 'Profile deleted successfully']);
+    }
+
+    public function addPoints(Request $request, $id)
+    {
+        $request->validate([
+            'points' => 'required|integer|min:0'
+        ]);
+
+        $profile = UserProfile::findOrFail($id);
+        $profile->points += $request->points;
+        $profile->save();
+
+        return response()->json([
+            'message' => 'Points updated successfully',
+            'profile' => $profile
+        ]);
     }
 }

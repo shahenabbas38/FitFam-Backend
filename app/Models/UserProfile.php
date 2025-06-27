@@ -16,13 +16,30 @@ class UserProfile extends Model
         'height',
         'family_members',
         'preferred_activity',
-        'fitness_level',  
+        'fitness_level',
         'points',
     ];
+    protected $appends = ['badge'];
+
 
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    /********************************************************************/
+    public function getBadgeAttribute()
+    {
+        $points = $this->points;
+
+        if ($points >= 100) {
+            return '🥇 Gold';
+        } elseif ($points >= 50) {
+            return '🥈 Silver';
+        } elseif ($points > 0) {
+            return '🥉 Bronze';
+        } else {
+            return '❌ No badge';
+        }
     }
 }
