@@ -28,9 +28,17 @@ class ProfileController extends Controller
     }
     public function showByUser($user_id)
     {
-        $profile = Profile::where('user_id', $user_id)->firstOrFail();
+        $profile = Profile::where('user_id', $user_id)->first();
+
+        if (!$profile) {
+            return response()->json([
+                'message' => 'Profile not found for this user.'
+            ], 404);
+        }
+
         return response()->json($profile, 200);
     }
+
 
     // public function update(ProfileController $request, $id)
     // {
