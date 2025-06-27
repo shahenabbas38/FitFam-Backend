@@ -26,6 +26,12 @@ class ProfileController extends Controller
             'profile' => $profile
         ], 201);
     }
+    public function showByUser($user_id)
+    {
+        $profile = Profile::where('user_id', $user_id)->firstOrFail();
+        return response()->json($profile, 200);
+    }
+
     // public function update(ProfileController $request, $id)
     // {
     //     $profile = Profile::FindOrfail($id);
