@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\OfflineChallenge;
+
+
 
 
 
@@ -72,6 +75,20 @@ class UserController extends Controller
 
         return response()->json([
             'results' => $users
+        ]);
+    }
+    public function joinChallenge(Request $request, $challengeId)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        $challenge = \App\Models\OfflineChallenge::findOrFail($challengeId);
+
+        $user->offlineChallenges()->attach($challenge->id);
+
+        return response()->json([
+            'message' => 'Challenge joined successfully!',
+            'challenge' => $challenge
         ]);
     }
 }

@@ -11,6 +11,8 @@ use App\Http\Controllers\FriendRequestController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\PerformanceStatController;
 use App\Http\Controllers\RewardSystemController;
+use App\Http\Controllers\OfflineChallengeController;
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -81,6 +83,13 @@ Route::prefix('rewards')->group(function () {
     Route::put('{id}', [RewardSystemController::class, 'update']);     // تعديل المكافأة
     Route::delete('{id}', [RewardSystemController::class, 'destroy']); // حذف المكافأة
 });
+/***********************************************************************************/
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('user-profiles/{id}/add-points', [UserProfileController::class, 'addPoints']);
+});
+/***********************************************************************************/
+Route::middleware('auth:sanctum')->get('offline-challenge', [OfflineChallengeController::class, 'getRandomChallenge']);
+Route::get('test-user-challenges', function () {
+    $user = \App\Models\User::first();
+    return $user->offlineChallenges()->get();
 });

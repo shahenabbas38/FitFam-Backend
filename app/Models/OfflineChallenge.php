@@ -11,4 +11,8 @@ class OfflineChallenge extends Model
         'description',
         'points',
     ];
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
