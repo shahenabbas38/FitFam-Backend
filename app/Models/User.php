@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\OfflineChallenge;
+use App\Models\OfflinechallengeDemo;
+
+
 
 
 
@@ -91,13 +93,24 @@ class User extends Authenticatable
         return $this->hasOne(RewardSystem::class);
     }
     /***************************************************************/
-    public function offlineChallenges()
-    {
-        return $this->belongsToMany(OfflineChallenge::class);
-    }
+    // public function offlineChallenges()
+    // {
+    //     return $this->belongsToMany(OfflineChallenge::class);
+    // }
     /***************************************************************/
     public function familyTreeFeatures()
     {
         return $this->hasMany(FamilyTreeFeature::class);
+    }
+    /***************************************************************/
+
+    public function offlineChallengesDemo()
+    {
+        return $this->belongsToMany(
+            OfflinechallengeDemo::class,
+            'offlinechallenge_demo_user',
+            'user_id',
+            'offlinechallenge_demo_id'
+        );
     }
 }

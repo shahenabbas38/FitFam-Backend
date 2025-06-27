@@ -15,6 +15,7 @@ use App\Http\Controllers\OfflineChallengeController;
 use App\Http\Controllers\FamilyTreeFeatureController;
 
 
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -89,6 +90,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('user-profiles/{id}/add-points', [UserProfileController::class, 'addPoints']);
 });
 /***********************************************************************************/
+
 Route::middleware('auth:sanctum')->get('offline-challenge', [OfflineChallengeController::class, 'getRandomChallenge']);
 Route::post('get-token/{id}', [UserController::class, 'getTokenForUser']);
 Route::middleware('auth:sanctum')->get('user/challenges', [UserController::class, 'getUserChallenges']);
@@ -98,6 +100,5 @@ Route::prefix('family-tree-features')->group(function () {
     Route::get('/index', [FamilyTreeFeatureController::class, 'index']);
     Route::post('/create', [FamilyTreeFeatureController::class, 'store']);
     Route::get('/show/{id}', [FamilyTreeFeatureController::class, 'show']);
-    Route::put('/update/{id}', [FamilyTreeFeatureController::class, 'update']);
-    Route::delete('/delete/{id}', [FamilyTreeFeatureController::class, 'destroy']);
+
 });

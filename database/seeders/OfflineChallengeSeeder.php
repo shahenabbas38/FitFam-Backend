@@ -3,13 +3,14 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\OfflineChallenge;
+use App\Models\OfflinechallengeDemo;
+
 
 class OfflineChallengeSeeder extends Seeder
 {
     public function run(): void
     {
-        OfflineChallenge::insert([
+        OfflinechallengeDemo::insert([
             [
                 'title' => 'امش 3000 خطوة',
                 'type' => 'خطوات',

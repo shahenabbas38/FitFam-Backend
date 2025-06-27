@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OfflineChallenge;
+use App\Models\OfflinechallengeDemo;
 
 class OfflineChallengeController extends Controller
 {
     public function getRandomChallenge()
     {
-        $challenge = OfflineChallenge::inRandomOrder()->first();
+        $challenge = OfflinechallengeDemo::inRandomOrder()->first();
 
         return response()->json($challenge);
     }

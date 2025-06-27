@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\OfflineChallenge;
+use App\Models\OfflinechallengeDemo;
+
 
 
 
@@ -82,9 +83,10 @@ class UserController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        $challenge = \App\Models\OfflineChallenge::findOrFail($challengeId);
+        $challenge = OfflinechallengeDemo::findOrFail($challengeId);
 
-        $user->offlineChallenges()->attach($challenge->id);
+
+        $user->offlineChallengesDemo()->attach($challenge->id);
 
         return response()->json([
             'message' => 'Challenge joined successfully!',
@@ -107,7 +109,7 @@ class UserController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        $challenges = $user->offlineChallenges()->get();
+        $challenges = $user->offlineChallengesDemo()->get();
 
         return response()->json([
             'message' => 'User challenges fetched successfully.',
