@@ -89,9 +89,6 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 /***********************************************************************************/
 Route::middleware('auth:sanctum')->get('offline-challenge', [OfflineChallengeController::class, 'getRandomChallenge']);
-Route::get('test-user-challenges', function () {
-    $user = \App\Models\User::first();
-    return $user->offlineChallenges()->get();
-});
 Route::post('get-token/{id}', [UserController::class, 'getTokenForUser']);
 Route::middleware('auth:sanctum')->get('user/challenges', [UserController::class, 'getUserChallenges']);
+Route::middleware('auth:sanctum')->post('user/join-challenge/{id}', [UserController::class, 'joinChallenge']);
