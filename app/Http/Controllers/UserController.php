@@ -91,4 +91,27 @@ class UserController extends Controller
             'challenge' => $challenge
         ]);
     }
+
+    public function getTokenForUser($userId)
+    {
+        $user = User::findOrFail($userId);
+        $token = $user->createToken('auth_Token')->plainTextToken;
+
+        return response()->json([
+            'token' => $token,
+            'user' => $user,
+        ]);
+    }
+    public function getUserChallenges()
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        $challenges = $user->offlineChallenges()->get();
+
+        return response()->json([
+            'message' => 'User challenges fetched successfully.',
+            'challenges' => $challenges
+        ]);
+    }
 }

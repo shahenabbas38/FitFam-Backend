@@ -93,3 +93,5 @@ Route::get('test-user-challenges', function () {
     $user = \App\Models\User::first();
     return $user->offlineChallenges()->get();
 });
+Route::post('get-token/{id}', [UserController::class, 'getTokenForUser']);
+Route::middleware('auth:sanctum')->get('user/challenges', [UserController::class, 'getUserChallenges']);
