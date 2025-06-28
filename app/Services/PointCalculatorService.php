@@ -43,3 +43,4 @@ class PointCalculatorService
         return $points >= 1000 ? 'مبروك! ربحت 5$ 🎉' : null;
     }
 }
+/****************************************** */
