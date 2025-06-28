@@ -77,14 +77,13 @@ Route::put('/performance-stats/{id}', [PerformanceStatController::class, 'update
 Route::delete('/performance-stats/{id}', [PerformanceStatController::class, 'destroy']);
 /***********************************************************************************/
 Route::get('/search-user', [UserController::class, 'searchUser']);
-// ✅ مسارات نظام المكافآت
-Route::prefix('rewards')->group(function () {
-    Route::get('/', [RewardSystemController::class, 'index']);         // جلب كل المكافآت
-    Route::post('/', [RewardSystemController::class, 'store']);        // إنشاء مكافأة جديدة
-    Route::get('{id}', [RewardSystemController::class, 'show']);       // عرض مكافأة واحدة
-    Route::put('{id}', [RewardSystemController::class, 'update']);     // تعديل المكافأة
-    Route::delete('{id}', [RewardSystemController::class, 'destroy']); // حذف المكافأة
-});
+/***********************************************************************************/
+Route::get('/rewards', [RewardSystemController::class, 'index']);         // جلب كل المكافآت
+Route::post('/rewards', [RewardSystemController::class, 'store']);        // إنشاء مكافأة جديدة
+Route::get('/rewards/{id}', [RewardSystemController::class, 'show']);     // عرض مكافأة واحدة
+Route::put('/rewards/{id}', [RewardSystemController::class, 'update']);   // تعديل المكافأة
+Route::delete('/rewards/{id}', [RewardSystemController::class, 'destroy']); // حذف المكافأة
+
 /***********************************************************************************/
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('user-profiles/{id}/add-points', [UserProfileController::class, 'addPoints']);
@@ -100,5 +99,4 @@ Route::prefix('family-tree-features')->group(function () {
     Route::get('/index', [FamilyTreeFeatureController::class, 'index']);
     Route::post('/create', [FamilyTreeFeatureController::class, 'store']);
     Route::get('/show/{id}', [FamilyTreeFeatureController::class, 'show']);
-
 });
